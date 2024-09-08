@@ -1,12 +1,12 @@
 from typing import Union
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
 class Item(BaseModel):
-    name: str
-    price: float
+    name: str = Field(min_length=3)
+    price: float = Field(gt=0, description="가격은 0보다 커야합니다")
     is_offer: Union[bool, None] = None
 
 @app.get("/")
